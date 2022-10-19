@@ -1,0 +1,59 @@
+All C strings end in '\0'.
+If you write a string literal -- e.g., "Hello", the compiler
+"sees" a '\0' at the end and stores it.
+To write an ASCII code, you can use single quotation marks
+around the desired symbol.
+Special symbols:
+\0
+\n
+\t
+What if you need an ASCII code and forget it?
+-- On Mac or Linux, "man ascii"
+
+The Stack
+
+The process of executing a function starts with the
+call
+instruction.
+call f1
+(f1 here is a LABEL.  The linker wil replace it with
+an address expression.)
+
+The CALL instruction --
+1. Pushes the return address onto the stack.
+   -- PUSH:
+      1. Decrements SP by the machine word size
+      2. Copies the contents of the operand register
+         onto memory at the address contained in SP.
+2. Copies the operand value into IP.
+   This causes the CPU to execute the first instruction
+   of the callee function as its next instruction.
+
+int f1(int x) {
+    return x * 3;
+}
+
+int main() {
+    int a = f1(argc);
+    return a;
+}
+
+int f2(int x) {
+    int nums[4];
+    nums[0] = x;  // -16(%rbp)
+    nums[1] = x + 1; // -12(%rbp)
+    nums[2] = x + 2;  // -8(%rbp)
+    nums[3] = x + 4;  // -4(%rbp)
+    return sum(nums);
+}
+
+
+1 10000011 111000 ...
+
+-1.111 x 2^4
+-11110.0
+-30.0
+
+
+
+

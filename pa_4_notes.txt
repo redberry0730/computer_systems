@@ -1,0 +1,63 @@
+Dot Product
+
+v = <a, b, c>
+w = <d, e, f>
+
+v * w = a * d + b * e + c * f
+
+
+Matrix Product
+
+A
+a b
+c d
+
+B
+e f
+g h
+
+C
+(a * e + b * g)   (a * f + b * h)
+(c * e + d * g)   (c * f + d * h)
+
+C[i,j] = A[i] * B[j]
+
+
+
+for i in [0, dim)
+  for j in [0, dim) 
+    C[i, j] = A[i] * B[j]
+
+for i in [0, dim)
+  for j in [0, dim) 
+    C[i, j] = 0
+    for k in [0, dim)
+      C[i, j] += A[i, k] * B[k, j]
+
+
+Transposition:
+
+a b
+c d  -->
+
+a c
+b d
+
+
+a b c d        a e i m
+e f g h  -->   b f j h
+i j k l        c g k o
+m n o p        d h l p
+
+
+Indexing where a matrix is represented as a single-dimensional ("flat") array:
+
+c[i][j] --> c[i * dim + j]
+
+The matrix rows are stored in ROW-MAJOR ORDER:
+array c holds row 0, followed by row 1, etc.  Each
+row has length dim.
+
+In "i * dim + j", the "i * dim" get you to the right row,
+and the "+ j" gets you to the right column within that
+row.

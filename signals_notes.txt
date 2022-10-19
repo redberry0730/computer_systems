@@ -1,0 +1,67 @@
+BACKGROUND
+
+The operating system is a big program that launches when the computer
+starts.
+
+The kernel is the portion of the OS that resides at all times in memory.
+
+A process is an instance of a program in execution.
+
+
+
+SIGNALS
+
+A message passed from the kernel to a process or between processes through
+the kernel.
+
+The kernel--
+Sets a bit in a data structure (a long integer) in another data
+structure associated with the process called the Process Control Block
+(PCB).
+
+When the kernel is about to restart a process, it first checks the
+signal bits.  If a signal bit is set, it passes control to a signal
+handler.
+
+The user application can install its own custom signal handler (function).
+It does so by issuing a system call to the kernel.
+
+
+
+SEQUENCE OF EVENTS
+
+The instruction to fetch the datum at address 0 causes the memory
+hardware to send back an error code on the memory bus and to raise
+the voltage on the CPU's interrupt pin.
+
+The CPU, instead of advancing to the next instruction, emulates through
+hardware a jmp instruction to the first address in the function whose
+address resides at index e (the error code) in the kernel's exception
+handler table. It also sets the kernel mode bit.
+
+The exception handler for the SEGV error code calls, in turn, the
+signal-sending code to send a SIGSEGV signal to the process.
+
+This sets the bit for SIGSEGV in the process's PCB and then goes to return
+control to the faulting instruction in the process.  But, before it does
+so, it checks the PCB, and, because the bit is set, it instead transfers
+control to the signal handler for SIGSEGV.
+
+The default signal handler in the process's signal handler table
+prints "Segmentation fault" to the console and aborts the process.
+
+
+void segv_handler(int)
+
+SIGSEGV
+
+
+Calling a function in the kernel's exception handler table would look like this:
+
+Suppose the table were called "table."
+Suppose the exception has number num.
+
+table[num](num);
+
+
+The index for system calls in the exception handler table is 0x80.

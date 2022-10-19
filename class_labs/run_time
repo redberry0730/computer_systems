@@ -1,0 +1,23 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define ARRAY_SIZE 20
+#define MAX_VALUE 100
+
+long sum1(int length, int * nums) {
+    long accum = 0l;
+    for (int i = 0; i < length; i++){
+        accum += nums[i];
+    }
+    return accum;
+}
+
+void run_and_time(long (* sum_func)(int, int*), int length, int * nums) {
+    long sum = sum_func(length, nums);
+    printf("Sum: %d\n", sum);
+}
+
+int main() {
+
+
+}
